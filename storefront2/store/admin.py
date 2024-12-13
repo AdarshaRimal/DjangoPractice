@@ -28,7 +28,7 @@ class ProductAdmin(admin.ModelAdmin):
     }
     actions = ['clear_inventory']
     list_display = ['title', 'unit_price',
-                    'inventory_status', 'collection_title']
+                    'inventory_status', 'collection_title','id']
     list_editable = ['unit_price']
     list_filter = ['collection', 'last_update', InventoryFilter]
     list_per_page = 10
@@ -57,7 +57,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(models.Collection)
 class CollectionAdmin(admin.ModelAdmin):
     autocomplete_fields = ['featured_product']
-    list_display = ['title', 'products_count']
+    list_display = ['title', 'products_count','id']
     search_fields = ['title']
 
     @admin.display(ordering='products_count')
@@ -72,7 +72,7 @@ class CollectionAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
-            products_count=Count('product')
+            products_count=Count('products')
         )
 
 
@@ -113,3 +113,7 @@ class OrderAdmin(admin.ModelAdmin):
     autocomplete_fields = ['customer']
     inlines = [OrderItemInline]
     list_display = ['id', 'placed_at', 'customer']
+
+@admin.register(models.OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display=['order','product']

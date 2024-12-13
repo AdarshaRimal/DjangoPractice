@@ -1,12 +1,17 @@
 from decimal import Decimal
-from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
 
 from store.models import Product,Collection
 
-class CollectionSerializers(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(max_length = 255)
+class CollectionSerializers(serializers.ModelSerializer):
+    product_count = serializers.IntegerField(read_only = True)
+    class Meta:
+        model = Collection
+        fields = ['id','title','product_count']
+        
+
+    
+
 
 class ProductSerializers(serializers.ModelSerializer):
     # id = serializers.IntegerField()
