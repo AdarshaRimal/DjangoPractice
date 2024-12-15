@@ -117,3 +117,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(models.OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     list_display=['order','product']
+
+@admin.register(models.Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['product','name','id']

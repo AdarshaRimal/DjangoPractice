@@ -4,10 +4,10 @@ from . import views
 from rest_framework_nested import routers       #using drf-nested-routers
 
 router = routers.DefaultRouter()
-router.register('products',viewset=views.ProductViewset)
+router.register('products',viewset=views.ProductViewset,basename='products')
 router.register('collections',viewset=views.CollectionViewset)
 
-products_router = routers.NestedDefaultRouter(router,'products',lookup='product')
+products_router = routers.NestedDefaultRouter(router,'products',lookup='product') 
 products_router.register('reviews',views.ReviewViewset,basename='product-reviews')
 
 urlpatterns = router.urls + products_router.urls
