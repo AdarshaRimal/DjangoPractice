@@ -6,8 +6,8 @@ from rest_framework import status,mixins
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from .models import OrderItem, Product,Collection
-from .serializers import CollectionSerializers, ProductSerializers
+from .models import OrderItem, Product,Collection, Review
+from .serializers import CollectionSerializers, ProductSerializers, ReviewSerializer
 
 
 #using viewset
@@ -24,9 +24,6 @@ class ProductViewset(ModelViewSet):
         return super().destroy(request, *args, **kwargs)
     
 
-    
-
-
 class CollectionViewset(ModelViewSet):
     queryset = Collection.objects.annotate(product_count=Count('products')).all()
     serializer_class = CollectionSerializers
@@ -38,6 +35,14 @@ class CollectionViewset(ModelViewSet):
 
         return super().destroy(request, *args, **kwargs)
     
+class ReviewViewset(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get_serializer_context(self):
+        return {'product_id':self.kwargs['product_pk']}
+
+
     # def delete(self,request,pk):
     #     collection = get_object_or_404(Collection,pk=pk)
     #     if collection.products.count()>0:
