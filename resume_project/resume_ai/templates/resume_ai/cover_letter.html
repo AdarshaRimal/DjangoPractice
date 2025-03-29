@@ -1,0 +1,7 @@
+{% extends "resume_ai/base.html" %}
+{% block title %}Cover Letter{% endblock %}
+{% block content %}
+<h2>Your Generated Cover Letter</h2>
+<pre class="border p-3">{{ cover_letter }}</pre>
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}

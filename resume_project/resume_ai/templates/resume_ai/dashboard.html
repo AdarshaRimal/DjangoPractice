@@ -1,0 +1,34 @@
+<!-- resume_ai/templates/resume_ai/dashboard.html -->
+{% extends "resume_ai/base.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+<a href="{% url 'upload_resume' %}" class="btn btn-primary mb-3">Upload New Resume</a>
+
+{% if resumes %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Uploaded</th>
+                <th>File</th>
+                <th>Skills</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resume in resumes %}
+                <tr>
+                    <td>{{ resume.uploaded_at|date:"M d, Y" }}</td>
+                    <td>{{ resume.file.name }}</td>
+                    <td>{{ resume.skills|join:", " }}</td>
+                    <td>
+                        <a href="{% url 'generate_cover' resume.id %}" class="btn btn-sm btn-success">Generate Cover Letter</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No resumes uploaded yet.</p>
+{% endif %}
+{% endblock %}
